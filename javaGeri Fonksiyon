@@ -1,0 +1,17 @@
+javaGeri('anasayfa','Isimiz bitti Geri gidiyoruz'); // mesaj ile geri donmek icin basic bir fonksiyon link geri olursa direk mesaj gosterir ve bir onceki sayfaya gider geri harici yazilan link olarka kabul gorur 
+
+function javaGeri($link,$mesaj)
+    {
+    if($link=="geri")
+    {
+        echo '<script>
+        alert("'.$mesaj.'");
+        window.history.back();
+        </script>';
+    }
+    else {
+        echo '<script>
+       alert("'.$mesaj.'");
+       window.location = "'.$link.'";
+       </script>';
+    }
