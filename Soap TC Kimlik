@@ -1,0 +1,33 @@
+
+// fonksiyona ad soyad tc dogumyili gondermeniz durumunda calisir eger tc ve benzeri sistem hatasi varsa cpanelden SOAP kapalidir 
+
+function tcSorgu($ad,$soyad,$tc,$dogumyili)
+{
+    // tc kimlik Doğrulama APİ
+    if (extension_loaded("soap")) 
+    {
+        // Soap Kurulu ise Bu alana Geç....
+        $client = new SoapClient("https://tckimlik.nvi.gov.tr/Service/KPSPublic.asmx?WSDL");
+        try {
+            $result = $client->TCKimlikNoDogrula([
+                'TCKimlikNo' => ''.$tc.'',
+                'Ad' => ''.$ad.'',
+                'Soyad' => ''.$soyad.'',
+                'DogumYili' => ''.$dogumyili.''
+            ]);
+            if ($result->TCKimlikNoDogrulaResult) {
+                echo 'Tamam Sen Gerçeksin';
+            } else {
+                echo 'Hatalı Kullanıcı Seni Gidi Seni ';
+            }
+        } catch (Exception $e) {
+            echo $e->faultstring;
+        }
+
+
+    } 
+    else 
+    {
+        echo "Tc ve benzeri sistemler için SOAP Eklentisini Kurmanız Gerekmektedir...";
+    }
+}
