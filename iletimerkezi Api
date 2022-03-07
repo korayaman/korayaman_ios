@@ -1,0 +1,48 @@
+// ileti Merkezi Curl ile SMS gonderme Fonksiyonu
+
+function sms($telefon,$mesaj,$yonlendir=null)
+    {
+    // telefon mesaj ve gıdecek yer olarak yonlendırme alır bu ıslem ıcın 
+    $gonderen="Nakilnat";
+    $api="xxx";
+    $hash="xxx";
+    $data = '{
+        "request":{
+        "authentication":{
+            "key":"'.$api.'",
+            "hash":"'.$hash.'"
+        },
+        "order":{
+            "sender":"Gonderen",// Calisilacak Firma ismi
+            "sendDateTime":[],
+            "iys":"0",
+            "iysList":"BIREYSEL",
+            "message":{
+                "text":"'.$mesaj.'",
+                "receipents":{
+                    "number":[
+                    "'.$telefon.'"
+                    ]
+                }
+            }
+        }
+        }
+    }';            
+    $ch = curl_init('https://api.iletimerkezi.com/v1/send-sms/json');                                                                      
+    curl_setopt($ch, CURLOPT_CUSTOMREQUEST, "POST");                                                                     
+    curl_setopt($ch, CURLOPT_POSTFIELDS, $data);                                                                  
+    curl_setopt($ch, CURLOPT_RETURNTRANSFER, true);                                                                      
+    curl_setopt($ch, CURLOPT_HTTPHEADER, array(                                                                          
+        'Content-Type: application/json',                                                                                
+        'Content-Length: ' . strlen($data))                                                                       
+    );                                                                                                                                                                                                               
+    $result = curl_exec($ch);
+        if(empty($yonlendir))
+        {
+
+        }
+        else {
+            yonlendir("{$yonlendir}"); // yonlendir fonksiyonu icin Koray Kutuphanesi Lazim 
+        }
+    
+    }
