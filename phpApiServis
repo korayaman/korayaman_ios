@@ -1,0 +1,32 @@
+// PHP ile servis olusturma
+
+header("Access-Control-Allow-Origin: *");
+header("Access-Control-Request-Headers: GET,POST,DELETE,PUT");
+header('Access-Control-Allow-Headers: Accept,Accept-Language,Content-Language,Content-Type');
+
+
+$jsonReqUrl = "php://input";
+$reqjson = file_get_contents($jsonReqUrl);
+$veri = json_decode($reqjson, true); // veri nerden geliyor buradan geliyor 
+
+// json veri alma tamamlandı 
+
+$sayfa=select("{$_GET['sayfa']}");
+
+switch ($sayfa) 
+{
+   case 'info':
+      // sayfa info ve veri deger olan ne gelirse geri donus saglar bu sayede istedigimiz sekilde api servisi yazabiliriz 
+      $sonuc=array("result"=>"{$veri["deger"]}");
+   break:
+  
+  
+    default:
+    // sayfa degeri gelmemesi durumunda tanimsiz istek talebi donusu
+    $sonuc=array("result"=>"tanimsiz istek talebinde bulundunuz");
+    break;
+}
+
+// Json Olarak Donusu Saglamasi icin bunu kullaniyoruz
+$result=json_encode($sonuc,JSON_UNESCAPED_UNICODE);   
+echo $result;
