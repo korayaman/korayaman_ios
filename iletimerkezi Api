@@ -1,3 +1,5 @@
+// ornek Fonksion   sms("cepTelefonu","Mesaj");  //  ceptel ve mesaj yazarak sistemden direk sms atma imkani saglar bildirim olarak kullanim icin ideal 
+
 // ileti Merkezi Curl ile SMS gonderme Fonksiyonu
 
 function sms($telefon,$mesaj,$yonlendir=null)
